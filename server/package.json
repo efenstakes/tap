@@ -1,0 +1,34 @@
+{
+    "name": "tap",
+    "version": "1.0.0",
+    "description": "a service delivery server",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.js",
+        "test": "npm test",
+        "make-docs": "gulp apidoc"
+    },
+    "keywords": [
+        "service",
+        "server",
+        "digital services"
+    ],
+    "author": "efen",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^3.0.6",
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4",
+        "express-validator": "^5.3.1",
+        "jsonwebtoken": "^8.5.1",
+        "mysql2": "^1.6.5",
+        "nodemailer": "^6.1.1",
+        "passport": "^0.4.0",
+        "passport-jwt": "^4.0.0",
+        "passport-local": "^1.0.0"
+    },
+    "devDependencies": {
+        "gulp": "^4.0.0",
+        "gulp-apidoc": "^0.2.8"
+    }
+}
