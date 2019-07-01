@@ -45,6 +45,9 @@ module.exports.service_provider = [
     .exists().withMessage('City must be provided')
     .matches('[a-zA-Z]').withMessage('City must contain letters'),
 
+    check('min_charge')
+    .exists().withMessage('Minimum charge for services must be provided'),
+
     check('is_company')
     .exists().withMessage('Phone must be provided')
     // .isLength({ min: 10, max: 15 }).withMessage('Phone provided must be valid'),

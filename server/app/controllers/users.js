@@ -10,15 +10,6 @@ const AppVars = require('../config/vars')
 const validators = require('../validators/users')
 const utils = require('./utils')
 
-// `username` varchar(50) not null unique,
-// `passcode` varchar(190) not null,
-// `email` varchar(90),
-// `city` varchar(50),
-// `verified` boolean default false,
-// `joined_on` datetime default NOW(),
-// `user_type` enum('SERVICE_PROVIDER', 'USER', 'ADMIN') not null,
-// `is_company` boolean default false,
-
 
 // create a user account
 module.exports.save = async function(req, res) {
@@ -60,10 +51,10 @@ module.exports.user_to_service_provider = async function(req, res) {
     }
 
     let { id } = req.user
-    let { name, city, is_company } = req.body
+    let { name, city, is_company, min_charge } = req.body
 
-    let query = 'update users set name = ?, city = ?, is_company = ? where id = ?'
-    let [result] = await db.execute(query, [name, city, is_company, id])
+    let query = 'update users set name = ?, city = ?, is_company = ?, min_charge = ? where id = ?'
+    let [result] = await db.execute(query, [name, city, is_company, min_charge, id])
 
     if (result.affectedRows == 1) {
         response.updated = true
