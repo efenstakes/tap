@@ -6,6 +6,7 @@ const passport = require('passport')
 // import internal libraries
 
 // routes
+const userRoutes = require('./app/routes/users')
 
 
 // initializing the application instance
@@ -25,6 +26,7 @@ require('./config/passport')
 
 
 // hook up routes with controllers
+app.use('/api/user', userRoutes)
 
 
 // start app on
