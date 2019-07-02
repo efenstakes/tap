@@ -18,6 +18,8 @@ create table `users` (
    `verified` boolean default false,
    `min_charge` decimal(10, 2) default 0.0,
    `joined_on` datetime default NOW(),
+   `todo_on` datetime,
+   `do_now` boolean default true,
    `user_type` enum('SERVICE_PROVIDER', 'USER', 'ADMIN') default 'USER',
    `is_company` boolean default false,
    primary key(id)

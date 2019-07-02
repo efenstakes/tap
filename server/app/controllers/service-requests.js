@@ -19,12 +19,16 @@ module.exports.save = async function(req, res) {
     // }
 
     // handle adding data to the database
-    let query = 'insert into service_requests ( made_by, service, description ) values( ?, ?, ? )'
+    let query = 'insert into service_requests ( made_by, service, description, do_now, todo_on ) values( ?, ?, ?, ?, ? )'
 
     let made_by = req.user.id
-    let { service, description } = req.body
+    let { service, description, todo_on, do_now } = req.body
 
-    let [result] = await db.execute(query, [made_by, service, description])
+    if (do_now) {
+        todo_on = new Date()
+    }
+
+    let [result] = await db.execute(query, [made_by, service, description, todo_on, do_now])
 
     if (result.affectedRows == 1) {
         response.saved = true
