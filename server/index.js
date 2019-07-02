@@ -7,6 +7,7 @@ const passport = require('passport')
 
 // routes
 const userRoutes = require('./app/routes/users')
+const serviceRequestRoutes = require('./app/routes/service-requests')
 
 
 // initializing the application instance
@@ -27,6 +28,7 @@ require('./config/passport')
 
 // hook up routes with controllers
 app.use('/api/user', userRoutes)
+app.use('/api/service-request', serviceRequestRoutes)
 
 
 // start app on

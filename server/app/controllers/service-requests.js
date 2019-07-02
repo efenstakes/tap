@@ -58,6 +58,24 @@ module.exports.make_offer = async function(req, res) {
 
 
 
+// get details of a service request  
+module.exports.details = async function(req, res) {
+    let response = { request: [] }
+    let { id } = req.params
+
+    // handle adding data to the database
+    let query = 'select * from service_requests where id = ?'
+
+    let [result] = await db.execute(query, [id])
+
+    if (result && result.length) {
+        response.request = result[0]
+    }
+
+    res.json(response)
+}
+
+
 // get a service request offers 
 module.exports.get_offers = async function(req, res) {
     let response = { offers: [] }

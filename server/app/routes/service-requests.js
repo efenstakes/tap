@@ -13,27 +13,34 @@ router.post('/', passport.authenticate('service-provider-jwt', { session: false 
 
 
 // make a service request offer if service provider
-router.post('/offer', passport.authenticate('service-provider-jwt', { session: false }), spController.make_offer)
+router.post('/id:/offer', passport.authenticate('service-provider-jwt', { session: false }), spController.make_offer)
 
 
 // get a service request offers 
-router.post('/offer', passport.authenticate('users-jwt', { session: false }), spController.get_offers)
+router.post('/id:/offers', passport.authenticate('users-jwt', { session: false }), spController.get_offers)
 
 
 // delete 
-router.delete('/', passport.authenticate('users-jwt', { session: false }), spController.delete)
+router.delete('/id:', passport.authenticate('users-jwt', { session: false }), spController.delete)
+
+// get details 
+router.get('/id:', spController.details)
 
 
 // chose service provider for a request -- done by the request maker
-router.post('/choose-provider', passport.authenticate('users-jwt', { session: false }), spController.choose_provider)
+router.post('/id:/choose-provider', passport.authenticate('users-jwt', { session: false }), spController.choose_provider)
 
 
 // service provider to reject a request
-router.post('/reject', passport.authenticate('service-provider-jwt', { session: false }), spController.reject)
+router.post('/id:/reject', passport.authenticate('service-provider-jwt', { session: false }), spController.reject)
+
+
+// service provider to accept a request
+router.post('/id:/accept', passport.authenticate('service-provider-jwt', { session: false }), spController.accept)
 
 
 // add request rating after its done
-router.post('/rate', passport.authenticate('users-jwt', { session: false }), spController.rate)
+router.post('/id:/rate', passport.authenticate('users-jwt', { session: false }), spController.rate)
 
 
 
