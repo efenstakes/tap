@@ -37,8 +37,8 @@ create table `service_requests`(
    `is_accepted` boolean default false,
 
    `made_on` datetime default NOW(),
-   foreign key(service_provider) references users(id),
-   foreign key(made_by) references users(id),
+   foreign key(service_provider) references users(id) on delete set null,
+   foreign key(made_by) references users(id) on delete set null,
    primary key(id)
 );
 
