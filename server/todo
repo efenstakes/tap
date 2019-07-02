@@ -1,7 +1,7 @@
 
 
 . employ sequelize as an orm to avoid raw sql
-. add service request routing and controller logic
+. test server
 
 
 
