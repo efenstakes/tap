@@ -17,25 +17,24 @@ var AppVars = require('../config/vars')
 
 // LocalStrategy for users 
 passport.use('users', new LocalStrategy({
-        usernameField: 'username', passwordField: 'password'
-    }, async function(username, password, done) {
-      
-          let query = 'select * from users where username = ?'
-          let [ rows ] = await db.query(query, [ username ])
-          
-          if( rows && rows[0] ){
-              let match = await bcrypt.compare(password, rows[0]['passcode'])
+    usernameField: 'username',
+    passwordField: 'password'
+}, async function(username, password, done) {
 
-              if( match ) {
-                let { password, ...uzer } = rows[0]
-                return done(null, uzer)
-              }
-          }
-          return done(false)
+    let query = 'select * from users where username = ?'
+    let [rows] = await db.query(query, [username])
 
-      }
-    )
-)
+    if (rows && rows[0]) {
+        let match = await bcrypt.compare(password, rows[0]['passcode'])
+
+        if (match) {
+            let { password, ...uzer } = rows[0]
+            return done(null, uzer)
+        }
+    }
+    return done(false)
+
+}))
 
 
 
@@ -46,25 +45,43 @@ jwt_opts.secretOrKey = AppVars.jwt.secret
 
 // handle jwt authentication for users 
 passport.use('users-jwt', new JwtStrategy(jwt_opts, async function(jwt_payload, done) {
-  
-        let { id, timestamp } = jwt_payload.data 
 
-        // if this timestamp is older than 60 minutes, reject it
-        if( (Date.now() - timestamp) > 3600000 ) { 
-          return done(false)
-        }
+    let { id, timestamp } = jwt_payload.data
 
-        let query = 'select * from users where id = ?'
-        let [ rows ] = await db.query(query, [ id ])
-
-        if( rows && rows[0] ) {
-          let { password, ...uzer } = rows[0]
-          return done(null, uzer)
-        }
+    // if this timestamp is older than 60 minutes, reject it
+    if ((Date.now() - timestamp) > 3600000) {
         return done(false)
-        
     }
-));
+
+    let query = 'select * from users where id = ?'
+    let [rows] = await db.query(query, [id])
+
+    if (rows && rows[0]) {
+        let { password, ...uzer } = rows[0]
+        return done(null, uzer)
+    }
+    return done(false)
+
+}));
 
 
+// handle jwt authentication for service providers 
+passport.use('service-provider-jwt', new JwtStrategy(jwt_opts, async function(jwt_payload, done) {
 
+    let { id, timestamp } = jwt_payload.data
+
+    // if this timestamp is older than 60 minutes, reject it
+    if ((Date.now() - timestamp) > 3600000) {
+        return done(false)
+    }
+
+    let query = 'select * from users where id = ? and user_type = ?'
+    let [rows] = await db.query(query, [id, 'SERVICE_PROVIDER'])
+
+    if (rows && rows[0]) {
+        let { password, ...uzer } = rows[0]
+        return done(null, uzer)
+    }
+    return done(false)
+
+}));
