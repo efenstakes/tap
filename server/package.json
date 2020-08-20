@@ -16,7 +16,7 @@
     "author": "efen",
     "license": "ISC",
     "dependencies": {
-        "bcrypt": "^3.0.6",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.18.3",
         "express": "^4.16.4",
         "express-validator": "^5.3.1",
